@@ -9,9 +9,9 @@ private const val COMMISSION_MAESTRO_FIXED = 2_000
 private const val MIN_TRANSFER = 1_000
 private const val MONTH_TRANSFER_LIMIT = 7_500_000
 
-class Account(_amount: Int) {
+class Account(_amount: Int, _transfersThisMonth: Int = 0) {
     private var amount: Int = _amount
-    private var transfersThisMonth: Int = 0
+    private var transfersThisMonth: Int = _transfersThisMonth
 
     private fun decreaseAmount(sum: Int): Boolean {
         amount -= sum
@@ -35,7 +35,7 @@ class Account(_amount: Int) {
         return true
     }
 
-    private fun commission(sum: Int, type: String): HashMap<String, Int> {
+    private fun commission(sum: Int, type: String = "VK Pay"): HashMap<String, Int> {
         val commissionAndMaxPossibleSum = HashMap<String, Int>()
         when (type) {
             "Visa", "Мир" -> {
@@ -66,7 +66,7 @@ class Account(_amount: Int) {
         return commissionAndMaxPossibleSum
     }
 
-    fun transfer(sum: Int, type: String): Boolean {
+    fun transfer(sum: Int, type: String = "VK Pay"): Boolean {
         val countCommission = commission(sum, type)
         return when {
             (sum < MIN_TRANSFER) -> {
@@ -91,10 +91,7 @@ $this""".trimIndent())
         }
     }
 
-    override fun toString(): String {
-        return """
-            Your Account is $amount kopecks.
+    override fun toString() = """Your Account is $amount kopecks.
             Total sum of transfers in this month is $transfersThisMonth kopecks.
             """.trimIndent()
-    }
 }
