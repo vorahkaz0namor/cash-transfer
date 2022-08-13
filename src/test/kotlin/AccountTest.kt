@@ -16,7 +16,7 @@ class AccountTest {
     @Test
     fun zeroCheck() {
         val account = listOf(Account(0), Account(600), Account(1_500))
-        val checkExpected = listOf(true, true, false)
+        val checkExpected = listOf(false, true, false)
         val result = ArrayList<Boolean>()
         for (acc in account)
             result.add(acc.zeroCheck())
