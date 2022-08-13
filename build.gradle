@@ -1,4 +1,6 @@
 plugins {
+    id 'java'
+    id 'jacoco'
     id 'org.jetbrains.kotlin.jvm' version '1.7.10'
 }
 
@@ -10,11 +12,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'org.jetbrains.kotlin:kotlin-test'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib'
+    testImplementation 'org.junit.jupiter:junit-jupiter-migration-support:5.0.0-M4'
+//    testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
 
 compileKotlin {

@@ -35,15 +35,17 @@ class Account(_amount: Int, _transfersThisMonth: Int = 0) {
         return true
     }
 
-    private fun commission(sum: Int, type: String = "VK Pay"): HashMap<String, Int> {
+    fun commission(sum: Int, type: String = "VK Pay"): HashMap<String, Int> {
         val commissionAndMaxPossibleSum = HashMap<String, Int>()
         when (type) {
             "Visa", "Мир" -> {
                 val commissionByPercent = sum * COMMISSION_VISA_MIR
+                // condition C01
                 if (commissionByPercent > COMMISSION_VISA_FIXED)
                     commissionAndMaxPossibleSum.put("commission", commissionByPercent.roundToInt())
                 else
                     commissionAndMaxPossibleSum.put("commission", COMMISSION_VISA_FIXED)
+                // condition C02
                 if ((amount * COMMISSION_VISA_MIR / (1 + COMMISSION_VISA_MIR)) > COMMISSION_VISA_FIXED)
                     commissionAndMaxPossibleSum.put("maxPossibleSum", (amount / (1 + COMMISSION_VISA_MIR)).roundToInt())
                 else
@@ -51,9 +53,11 @@ class Account(_amount: Int, _transfersThisMonth: Int = 0) {
 
             }
             "Mastercard", "Maestro" -> {
+                // condition C03
                 if ((sum + transfersThisMonth) > MONTH_TRANSFER_LIMIT)
                     commissionAndMaxPossibleSum.put("commission", (sum * COMMISSION_MAESTRO + COMMISSION_MAESTRO_FIXED).roundToInt())
                 else commissionAndMaxPossibleSum.put("commission", 0)
+                // condition C04
                 if ((((amount - COMMISSION_MAESTRO_FIXED) / (1 + COMMISSION_MAESTRO)) + transfersThisMonth) > MONTH_TRANSFER_LIMIT)
                     commissionAndMaxPossibleSum.put("maxPossibleSum", ((amount - COMMISSION_MAESTRO_FIXED) / (1 + COMMISSION_MAESTRO)).roundToInt())
                 else commissionAndMaxPossibleSum.put("maxPossibleSum", amount)
@@ -92,6 +96,6 @@ $this""".trimIndent())
     }
 
     override fun toString() = """Your Account is $amount kopecks.
-            Total sum of transfers in this month is $transfersThisMonth kopecks.
+Total sum of transfers in this month is $transfersThisMonth kopecks.
             """.trimIndent()
 }

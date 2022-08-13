@@ -6,12 +6,12 @@ import kotlin.collections.HashMap
 private val sc = Scanner(System.`in`)
 
 fun main() {
-    val account = Account(10_000_000)
-    val cardsType: HashMap<Int, String> = HashMap(mapOf(Pair(1, "Visa"),
-                                                        Pair(2, "Мир"),
-                                                        Pair(3, "Mastercard"),
-                                                        Pair(4, "Maestro"),
-                                                        Pair(5, "VK Pay")))
+    val account = Account(7_540_000)
+    val cardsType: HashMap<Int, String> = hashMapOf(Pair(1, "Visa"),
+                                                    Pair(2, "Мир"),
+                                                    Pair(3, "Mastercard"),
+                                                    Pair(4, "Maestro"),
+                                                    Pair(5, "VK Pay"))
     var sum: Int
     var type: String
     var more = ""
