@@ -12,7 +12,6 @@ class AccountTest {
     private val COMMISSION_VISA_FIXED = 3_500
     private val COMMISSION_MAESTRO = 0.006
     private val COMMISSION_MAESTRO_FIXED = 2_000
-    private val MIN_TRANSFER = 1_000
 
     @Test
     fun zeroCheck() {
@@ -52,7 +51,7 @@ class AccountTest {
         val amount = 7_000
         val sum = listOf(700, 4_000, 3_000)
         val type = "Visa"
-        val expectedTransfer = listOf(false, false, true)
+        val expectedTransfer = listOf(true, false, true)
         val result = ArrayList<Boolean>()
         for (s in sum)
             result.add(Account(amount).transfer(s, type))
